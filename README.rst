@@ -2,9 +2,12 @@ Open Distro for Elasticsearch on Raspberry Pi
 ==============================================
 
 Installing and running Open Distro for Elasticsearch on Raspberry Pi
+
 - Remove knn plugins (does not work on Raspberry Pi)
-- Install to `/usr/local/opendistro`
-- Data folder is moved to `/var/lib/elasticsearch`
+
+- Install to ``/usr/local/opendistro``
+
+- Data folder is moved to ``/var/lib/elasticsearch``
 
 
 Install
