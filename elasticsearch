@@ -2,15 +2,8 @@
 # Elasticsearch
 ################################
 
-# Elasticsearch home directory
-ES_HOME=/usr/local/opendistro/opendistroforelasticsearch-1.12.0
-
 # Elasticsearch Java path
 JAVA_HOME=/usr/lib/jvm/java-11-openjdk-armhf
-
-# Elasticsearch configuration directory
-# Note: this setting will be shared with command-line tools
-ES_PATH_CONF=/usr/local/opendistro/opendistroforelasticsearch-1.12.0/config
 
 # Elasticsearch PID directory
 PID_DIR=/var/run/elasticsearch

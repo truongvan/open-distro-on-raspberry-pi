@@ -2,23 +2,35 @@
 # ref: https://opendistro.github.io/for-elasticsearch-docs/
 
 HOME_DIR=$(pwd)
-ES_HOME=/usr/local/opendistro/opendistroforelasticsearch-1.12.0
+ES_FOLDER_NAME=opendistroforelasticsearch-1.13.2
+ES_FILE_NAME=$ES_FOLDER_NAME-linux-x64.tar.gz
+ES_HOME=/usr/local/opendistro/$ES_FOLDER_NAME
+
+# Create config file
+echo "# Elasticsearch configuration directory">> elasticsearch
+echo "ES_PATH_CONF=$ES_HOME/config" >> elasticsearch
+echo "" >> elasticsearch
+echo "# Elasticsearch home directory" >> elasticsearch
+echo "ES_HOME=$ES_HOME" >> elasticsearch
+
+# Create systemd service
+sed -i.bak "s/opendistroforelasticsearch-1.12.0/$ES_FOLDER_NAME/" elasticsearch.service
 
 if [ ! -d /usr/local/opendistro ]; then
-  sudo mkdir -p /usr/local/opendistro;
+  sudo mkdir -p /usr/local/opendistro
   sudo chown pi:pi /usr/local/opendistro
 fi
 
 cd /usr/local/opendistro/
 
-curl https://d3g5vo6xdbdb9a.cloudfront.net/tarball/opendistro-elasticsearch/opendistroforelasticsearch-1.12.0.tar.gz -o opendistroforelasticsearch-1.12.0.tar.gz
-curl https://d3g5vo6xdbdb9a.cloudfront.net/tarball/opendistro-elasticsearch/opendistroforelasticsearch-1.12.0.tar.gz.sha512 -o opendistroforelasticsearch-1.12.0.tar.gz.sha512
-if [[ ! `shasum -a 512 -c opendistroforelasticsearch-1.12.0.tar.gz.sha512` == "opendistroforelasticsearch-1.12.0.tar.gz: OK" ]]; then 
+curl https://d3g5vo6xdbdb9a.cloudfront.net/tarball/opendistro-elasticsearch/$ES_FILE_NAME -o $ES_FILE_NAME
+curl https://d3g5vo6xdbdb9a.cloudfront.net/tarball/opendistro-elasticsearch/$ES_FILE_NAME.sha512 -o $ES_FILE_NAME.sha512
+if [[ ! `shasum -a 512 -c $ES_FILE_NAME.sha512` == "$ES_FILE_NAME: OK" ]]; then 
     echo "checksum does not Verify."
     exit 1
 fi
-tar -zxf opendistroforelasticsearch-1.12.0.tar.gz
-cd opendistroforelasticsearch-1.12.0
+tar -zxf $ES_FILE_NAME
+cd $ES_FOLDER_NAME
 
 echo "Remove knn plugin, do not work on Raspberry Pi"
 rm -rf $ES_HOME/plugins/opendistro-knn
